@@ -1,18 +1,15 @@
 function getComputerChoice() {
-	let computerPlay;
-	let computerNumber = Math.random();
+	let computerNumber = Math.random() * 10;
 
-	if (computerNumber < 0.33) {
-		computerPlay = "rock";
+	if (computerNumber < 3.333) {
+		return "rock";
 	}
-	else if (computerNumber > 0.33 && computerNumber < 0.66) {
-		computerPlay = "paper";
+	else if (computerNumber > 3.333 && computerNumber < 6.666) {
+		return "paper";
 	}
 	else {
-		computerPlay = "scisor";
+		return "scisor";
 	}
-
-	return computerPlay;
 }
 
 
@@ -35,15 +32,15 @@ function playRound() {
 	if (playerSelection.length == computerSelection.length) {
 		phrase = "It's a draw!";
 	}
-	else if (versus.includes("paper", "rock")) {
+	else if (versus.includes("paper") && versus.includes("rock")) {
 		phrase = "Paper beats rock!";
 		whoWon = "paper";
 	}
-	else if (versus.includes("rock", "scisor")) {
+	else if (versus.includes("rock") && versus.includes("scisor")) {
 		phrase = "Rock beats scisor!";
 		whoWon = "rock";
 	}
-	else if (versus.includes("paper", "scisor")) {
+	else if (versus.includes("paper") && versus.includes("scisor")) {
 		phrase = "Scisor beats paper!";
 		whoWon = "scisor";
 	}
@@ -52,7 +49,7 @@ function playRound() {
 }
 
 
-function findWinner() {
+function findRoundWinner() {
 	//Use return value from playRound() to find winner
 	//with array indexes
 	let results = playRound();
@@ -69,16 +66,12 @@ function findWinner() {
 
 
 function getRoundsNumber() {
-	let n = prompt("Enter number of rounds: ");
-	n = +n;
+	let n = parseInt(prompt("Enter number of rounds: "));
 	if (n <= 0 || n > 99) {
 		alert("Too many/few rounds");
 	}
-	else if (n == undefined) {
-		n = 1;
-	}
 
-	return Math.round(n);
+	return n;
 }
 
 function game() {
@@ -87,7 +80,7 @@ function game() {
 	let n = getRoundsNumber();
 
 	for (let i = 0; i < n; i++) {
-		let play = findWinner();
+		let play = findRoundWinner();
 		console.log(play);
 
 		if (play.includes("won")) {
@@ -103,11 +96,15 @@ function game() {
 			}
 		}
 	}
+	return declareWinner(playerWinCount, computerWinCount);
+}
 
-	if (playerWinCount > computerWinCount) {
+
+function declareWinner(player1Score, player2Score) {
+	if (player1Score > player2Score) {
 		return "You won the game!";
 	}
-	else if (computerWinCount > playerWinCount) {
+	else if (player2Score > player1Score) {
 		return "You lost the game!";
 	}
 	else {
