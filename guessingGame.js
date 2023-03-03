@@ -60,7 +60,7 @@ function findRoundWinner() {
 		return `You lost! ${results[3]}`;
 	}
 	else {
-		return "It's a drawn!";
+		return "It's a draw!";
 	}
 }
 
@@ -108,6 +108,6 @@ function declareWinner(player1Score, player2Score) {
 		return "You lost the game!";
 	}
 	else {
-		return "It's a drawn";
+		return "It's a tie";
 	}
 }
