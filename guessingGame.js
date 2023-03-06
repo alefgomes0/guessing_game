@@ -6,7 +6,9 @@ let computerScore = document.querySelector(".player2");
 computerScore.textContent = "";
 computerScore.style.color = "green";
 
+let gameFinished = false;
 let won = document.querySelector(".winner");
+let roundLog = document.querySelector(".roundLog");
 
 
 const buttons = document.querySelectorAll("#btn");
@@ -17,9 +19,6 @@ const buttons = document.querySelectorAll("#btn");
 		})
 	});
 
-let playerWinCount = 0;
-let computerWinCount = 0;
-const numberOfRounds = 5;
 
 function getComputerChoice() {
 	let computerNumber = Math.random() * 10;
@@ -79,24 +78,42 @@ function findRoundWinner(playerChoice) {
 function startGame(playerChoice) {
 	for (let i = 0; i < 1; i++) {
 		let play = findRoundWinner(playerChoice);
-		console.log(play);
+		roundLog.textContent = play;
 
 		if (play.includes("won")) {
 			playerScore.textContent += "O";
+			roundLog.style.color = "green";
 		}
 		else if (play.includes("lost")) {
 			computerScore.textContent += "O";
+			roundLog.style.color = "red";
+		}
+		else {
+			roundLog.style.color = "blue";
 		}
 	};
 	checkWinner();
+	playAgain();
 }
 
 
 function checkWinner() {
 	if (playerScore.textContent == "OOOOO") {
+		won.style.color = "green";
+		gameFinished = true;
 		return won.textContent = "You won the game!"
 	}
 	else if (computerScore.textContent == "OOOOO") {
+		won.style.color = "red";
+		gameFinished = true;
 		return won.textContent = "You lost the game!";
 	}
+}
+
+function playAgain() {
+	if (gameFinished) {
+		buttons.forEach((button) => {
+			button.classList.add(".btnDisabled");
+		})
+	} 
 }
