@@ -1,3 +1,26 @@
+let playerScore = document.querySelector(".player1");
+playerScore.textContent = "";
+playerScore.style.color = "green";
+
+let computerScore = document.querySelector(".player2");
+computerScore.textContent = "";
+computerScore.style.color = "green";
+
+let won = document.querySelector(".winner");
+
+
+const buttons = document.querySelectorAll("#btn");
+
+	buttons.forEach((button) => {
+		button.addEventListener("click", () => {
+			startGame(button.classList["value"]);
+		})
+	});
+
+let playerWinCount = 0;
+let computerWinCount = 0;
+const numberOfRounds = 5;
+
 function getComputerChoice() {
 	let computerNumber = Math.random() * 10;
 
@@ -12,18 +35,7 @@ function getComputerChoice() {
 	}
 }
 
-
-function getUserChoice() {
-	while(true) {
-		let choice = prompt("Select rock, paper or scisor: ").toLowerCase().trim();
-		if (choice === "rock" || choice === "paper" || choice === "scisor") {
-			return choice;
-		}
-	}
-}
-
-function playRound() {
-	let playerSelection = getUserChoice();
+function playRound(playerSelection) {
 	let computerSelection = getComputerChoice();
 	let versus = [playerSelection, computerSelection];
 	let phrase;
@@ -49,10 +61,10 @@ function playRound() {
 }
 
 
-function findRoundWinner() {
+function findRoundWinner(playerChoice) {
 	//Use return value from playRound() to find winner
 	//with array indexes
-	let results = playRound();
+	let results = playRound(playerChoice);
 	if (results[0] == results[2]) {
 		return `You won! ${results[3]}`;
 	}
@@ -60,54 +72,31 @@ function findRoundWinner() {
 		return `You lost! ${results[3]}`;
 	}
 	else {
-		return "It's a drawn!";
+		return "It's a draw!";
 	}
 }
 
-
-function getRoundsNumber() {
-	let n = parseInt(prompt("Enter number of rounds: "));
-	if (n <= 0 || n > 99) {
-		alert("Too many/few rounds");
-	}
-
-	return n;
-}
-
-function game() {
-	let playerWinCount = 0;
-	let computerWinCount = 0;
-	let n = getRoundsNumber();
-
-	for (let i = 0; i < n; i++) {
-		let play = findRoundWinner();
+function startGame(playerChoice) {
+	for (let i = 0; i < 1; i++) {
+		let play = findRoundWinner(playerChoice);
 		console.log(play);
 
 		if (play.includes("won")) {
-			playerWinCount++;
-			if (playerWinCount > n/2) {
-				break;
-			}
+			playerScore.textContent += "O";
 		}
 		else if (play.includes("lost")) {
-			computerWinCount++;
-			if (computerWinCount > n/2) {
-				break;
-			}
+			computerScore.textContent += "O";
 		}
-	}
-	return declareWinner(playerWinCount, computerWinCount);
+	};
+	checkWinner();
 }
 
 
-function declareWinner(player1Score, player2Score) {
-	if (player1Score > player2Score) {
-		return "You won the game!";
+function checkWinner() {
+	if (playerScore.textContent == "OOOOO") {
+		return won.textContent = "You won the game!"
 	}
-	else if (player2Score > player1Score) {
-		return "You lost the game!";
-	}
-	else {
-		return "It's a drawn";
+	else if (computerScore.textContent == "OOOOO") {
+		return won.textContent = "You lost the game!";
 	}
 }
