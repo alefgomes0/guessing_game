@@ -10,9 +10,12 @@ let gameFinished = false;
 let won = document.querySelector(".winner");
 let roundLog = document.querySelector(".roundLog");
 
+const reset = document.querySelector(".reset")
+reset.addEventListener("click", () => {
+	window.location.reload();
+})
 
 const buttons = document.querySelectorAll("#btn");
-
 	buttons.forEach((button) => {
 		button.addEventListener("click", () => {
 			startGame(button.classList["value"]);
@@ -33,6 +36,7 @@ function getComputerChoice() {
 		return "scisor";
 	}
 }
+
 
 function playRound(playerSelection) {
 	let computerSelection = getComputerChoice();
@@ -93,7 +97,7 @@ function startGame(playerChoice) {
 		}
 	};
 	checkWinner();
-	playAgain();
+	disableButtons();
 }
 
 
@@ -110,10 +114,10 @@ function checkWinner() {
 	}
 }
 
-function playAgain() {
+function disableButtons() {
 	if (gameFinished) {
 		buttons.forEach((button) => {
-			button.classList.add(".btnDisabled");
+			button.classList.add("btnDisabled")
 		})
 	} 
 }

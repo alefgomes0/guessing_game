@@ -31,9 +31,16 @@ p {
 
 .btnDisabled {
   cursor: not-allowed;
-  color: red;
 }
 
+.resetDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.reset {
+  margin-top: 50px;
+}
 
 h3 {
   text-align: center;
